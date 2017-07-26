@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 定义父模块 -->
+    <parent>
+        <artifactId>example</artifactId>
+        <groupId>com.xujiangjun.example</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 定义项目坐标:groupId和version与父模块一致 -->
+    <artifactId>example-manager</artifactId>
+    <packaging>jar</packaging>
+    <name>example-manager</name>
+
+    <!-- 自定义属性 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- 依赖管理 -->
+    <dependencies>
+        <dependency>
+            <groupId>com.xujiangjun.example</groupId>
+            <artifactId>example-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xujiangjun.example</groupId>
+            <artifactId>example-api</artifactId>
+        </dependency>
+        <!-- 其他系统依赖 -->
+
+        <!-- dubbo依赖 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+        </dependency>
+    </dependencies>
+</project>

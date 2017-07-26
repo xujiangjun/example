@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/rabbit
+        http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+    <!-- 配置参考：http://www.cnblogs.com/crazylqy/p/6567598.html -->
+
+    <!-- 配置connection-factory，指定连接rabbit server参数 -->
+    <rabbit:connection-factory id= "connectionFactory" host="${rabbitmq.host}" username="${rabbitmq.username}"
+            password="${rabbitmq.password}" port="${rabbitmq.port}" virtual-host="${rabbitmq.virtualHost}"/>
+
+    <!-- 通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!-- 定义queue -->
+    <rabbit:queue id="com.xujiangjun.example.xxQueue" name="com.xujiangjun.example.xxQueue" durable="true"
+                  auto-delete="false" exclusive="false"/>
+
+    <!-- 定义direct exchange，绑定com.xujiangjun.example.xxQueue queue -->
+    <rabbit:direct-exchange name="myChange" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="com.xujiangjun.example.xxQueue" key="hello"></rabbit:binding>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!--定义rabbit template用于数据的接收和发送-->
+    <rabbit:template id="myAmqpTemplate" connection-factory="connectionFactory" exchange="myChange"
+                     reply-timeout="${rabbitmq.connectionTimeout}" />
+
+    <!-- 接受 -->
+    <bean id="messageReceiver" class="com.xujiangjun.example.mq.QueueListenter"></bean>
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener queues="com.xujiangjun.example.xxQueue" ref="messageReceiver"/>
+    </rabbit:listener-container>
+
+    <!-- Spring异步线程池 -->
+    <bean id="taskExecutor"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 核心线程数，默认为1 -->
+        <property name="corePoolSize" value="10" />
+        <!-- 最大线程数，默认为Integer.MAX_VALUE -->
+        <property name="maxPoolSize" value="50" />
+        <!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE -->
+        <property name="queueCapacity" value="1000" />
+        <!-- 线程池维护线程所允许的空闲时间，默认为60s -->
+        <property name="keepAliveSeconds" value="300" />
+        <!-- 线程池对拒绝任务（无线程可用）的处理策略，目前只支持AbortPolicy、CallerRunsPolicy；默认为后者 -->
+        <property name="rejectedExecutionHandler">
+            <!-- AbortPolicy:直接抛出java.util.concurrent.RejectedExecutionException异常 -->
+            <!-- CallerRunsPolicy:主线程直接执行该任务，执行完之后尝试添加下一个任务到线程池中，可以有效降低向线程池内添加任务的速度 -->
+            <!-- DiscardOldestPolicy:抛弃旧的任务、暂不支持；会导致被丢弃的任务无法再次被执行 -->
+            <!-- DiscardPolicy:抛弃当前任务、暂不支持；会导致被丢弃的任务无法再次被执行 -->
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+    </bean>
+</beans>
