@@ -7,12 +7,10 @@ import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 import sun.misc.BASE64Encoder;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-
-import static org.apache.commons.codec.binary.Base64.encodeBase64String;
 
 /**
  * @author xujiangjun
@@ -20,12 +18,18 @@ import static org.apache.commons.codec.binary.Base64.encodeBase64String;
  */
 public class ZXingUtilsTest {
 
+    /**
+     * 生成二维码（无logo）
+     */
     @Test
     public void testBuildQRCode() throws IOException, WriterException {
         ZXingUtils.Encode.buildQRCode(300, "https://www.baidu.com?source=example",
                 "/Users/xujiangjun", "qrCode.png", ZXingUtils.ImageType.PNG);
     }
 
+    /**
+     * 生成二维码的Base64编码
+     */
     @Test
     public void testBuildQRCodeEncodeBase64() throws IOException, WriterException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -39,6 +43,19 @@ public class ZXingUtilsTest {
         }
     }
 
+    /**
+     * 生成带logo的二维码
+     */
+    @Test
+    public void testBuildQRCodeWithLogo() throws IOException, WriterException {
+        ZXingUtils.Encode.buildQRCodeWithLogo(300, "https://www.baidu.com", "/Users/xujiangjun", "qrCode.png", ZXingUtils.ImageType.PNG,
+                new FileInputStream(new File("/Users/xujiangjun/Downloads/alipay.png")));
+
+    }
+
+    /**
+     * 识别二维码
+     */
     @Test
     public void testReadQRCode() throws IOException, ReaderException {
         Result result = ZXingUtils.Decode.readQRCodeResult(new File("/Users/xujiangjun/qrCode.png"));

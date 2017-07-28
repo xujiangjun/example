@@ -3,6 +3,7 @@ package com.xujiangjun.example.common.util;
 import com.google.zxing.*;
 import com.google.zxing.Reader;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
@@ -11,6 +12,8 @@ import com.google.zxing.multi.MultipleBarcodeReader;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -18,6 +21,8 @@ import java.util.*;
 
 /**
  * QRCode生成与解析工具类
+ *
+ * 生成二维码带logo：http://www.jianshu.com/p/39c5bca32e3e
  *
  * @author xujiangjun
  * @date 2017-07-06 14:22
@@ -52,6 +57,11 @@ public class ZXingUtils {
             HINTS.put(EncodeHintType.MARGIN, 1);
         }
 
+        public static void buildQRCode(String content, OutputStream os, ImageType imageType)
+                throws WriterException, IOException {
+            buildQRCode(200, content, os, imageType);
+        }
+
         /**
          * 生成二维码
          * @param widthAndHeight    高宽
@@ -65,9 +75,35 @@ public class ZXingUtils {
             MatrixToImageWriter.writeToStream(bitMatrix, imageType.getValue(), os);
         }
 
-        public static void buildQRCode(String content, OutputStream os, ImageType imageType)
+        /**
+         * 生成二维码带logo
+         *
+         * @param widthAndHeight    高宽
+         * @param content           二维码内容
+         * @param os                输出流
+         * @param imageType         图片类型（自定义枚举）
+         * @param logoStream        logo输入流
+         */
+        public static void buildQRCodeWithLogo(int widthAndHeight, String content, OutputStream os, ImageType imageType,
+                                               InputStream logoStream) throws WriterException, IOException {
+            BitMatrix bitMatrix = new MultiFormatWriter()
+                    .encode(content, BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight, HINTS);// 生成矩阵
+            MatrixToImageConfig config = new MatrixToImageConfig();
+            BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix, config);
+            BufferedImage logo = ImageIO.read(logoStream);
+            int deltaHeight = widthAndHeight - logo.getHeight();
+            int deltaWidth = widthAndHeight - logo.getWidth();
+            BufferedImage combined = new BufferedImage(widthAndHeight, widthAndHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics2D = combined.createGraphics();
+            graphics2D.drawImage(image, 0, 0, null);
+            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            graphics2D.drawImage(logo, Math.round(deltaWidth / 2), Math.round(deltaHeight / 2), null);
+            ImageIO.write(combined, imageType.getValue(), os);
+        }
+
+        public static void buildQRCode(String content, String filePath, String fileName, ImageType imageType)
                 throws WriterException, IOException {
-            buildQRCode(200, content, os, imageType);
+            buildQRCode(200, content,filePath,fileName,imageType);
         }
 
         /**
@@ -86,9 +122,32 @@ public class ZXingUtils {
             MatrixToImageWriter.writeToPath(bitMatrix, imageType.getValue(), path);// 输出图像
         }
 
-        public static void buildQRCode(String content, String filePath, String fileName, ImageType imageType)
-                throws WriterException, IOException {
-            buildQRCode(200, content,filePath,fileName,imageType);
+        /**
+         * 生成二维码带logo
+         *
+         * @param widthAndHeight    高宽
+         * @param content           二维码内容
+         * @param filePath          输出目录
+         * @param fileName          输出文件名
+         * @param imageType         图片类型（自定义枚举）
+         * @param logoStream        logo输入流
+         */
+        public static void buildQRCodeWithLogo(int widthAndHeight, String content, String filePath, String fileName,
+                                               ImageType imageType, InputStream logoStream) throws WriterException, IOException {
+            BitMatrix bitMatrix = new MultiFormatWriter()
+                    .encode(content, BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight, HINTS);// 生成矩阵
+            MatrixToImageConfig config = new MatrixToImageConfig();
+            BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix, config);
+            BufferedImage logo = ImageIO.read(logoStream);
+            int deltaHeight = widthAndHeight - logo.getHeight();
+            int deltaWidth = widthAndHeight - logo.getWidth();
+            BufferedImage combined = new BufferedImage(widthAndHeight, widthAndHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics2D = (Graphics2D) combined.getGraphics();
+            graphics2D.drawImage(image, 0, 0, null);
+            graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            graphics2D.drawImage(logo, Math.round(deltaWidth / 2), Math.round(deltaHeight / 2), null);
+            Path path = FileSystems.getDefault().getPath(filePath, fileName);
+            ImageIO.write(combined, imageType.getValue(), path.toFile());
         }
     }
 
