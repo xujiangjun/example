@@ -16,6 +16,7 @@ public class DateUtils {
     public static final String FORMAT_STR_END_MINUTE = "yyyy-MM-dd HH:mm";
     public static final String FORMAT_STR_END_SECOND = "yyyy-MM-dd HH:mm:ss";
 
+    public static DateTimeFormatter dayFormatter = DateTimeFormat.forPattern(FORMAT_STR_END_DAY);
     public static DateTimeFormatter fullFormatter = DateTimeFormat.forPattern(FORMAT_STR_END_SECOND);
 
     public static String getPattern(String str) {
