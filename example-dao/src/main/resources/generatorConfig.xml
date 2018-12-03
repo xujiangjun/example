@@ -41,7 +41,19 @@
         </javaClientGenerator>
 
         <!-- 请自行更改 -->
-        <table tableName="c_param_config" domainObjectName="ParamConfig" enableCountByExample="false"
+        <!--<table tableName="c_param_config" domainObjectName="ParamConfig" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">-->
+			<!--<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>-->
+		<!--</table>        -->
+
+        <table tableName="tx_user" domainObjectName="TxUser" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">
+			<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>
+		</table>
+
+        <table tableName="tx_login_log" domainObjectName="TxLoginLog" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">
 			<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>
