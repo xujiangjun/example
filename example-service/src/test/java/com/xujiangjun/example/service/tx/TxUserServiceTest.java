@@ -44,4 +44,9 @@ public class TxUserServiceTest extends BaseTest {
         txUserService.loginCallInSameClass("testException", "1234");
     }
 
+    @Test
+    public void testLoginWithRollBack() throws Exception {
+        txUserService.loginWithRollBack("testException", "1234");
+    }
+
 }

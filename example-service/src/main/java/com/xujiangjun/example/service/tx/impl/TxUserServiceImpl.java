@@ -50,7 +50,7 @@ public class TxUserServiceImpl implements TxUserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    private void addTxUserWithException(String nickname, String username, String password){
+    public void addTxUserWithException(String nickname, String username, String password){
         addTxUser(nickname, username, password);
         throw new BusinessException(ErrorEnum.INTERNAL_SERVER_ERROR);
     }
