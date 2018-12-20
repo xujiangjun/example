@@ -1,10 +1,17 @@
 package com.xujiangjun.example.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xujiangjun.example.common.constant.ConfigConsts;
+import com.xujiangjun.example.dao.mapper.ParamConfigMapper;
+import com.xujiangjun.example.dao.model.ParamConfig;
 import com.xujiangjun.example.service.base.BaseTest;
 import com.xujiangjun.example.service.base.ParamConfigService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author xujiangjun
@@ -14,6 +21,9 @@ public class ParamConfigServiceTest extends BaseTest {
 
     @Autowired
     private ParamConfigService paramConfigService;
+
+    @Autowired
+    private ParamConfigMapper paramConfigMapper;
 
     @Test
     public void getByParamNo() throws Exception {
@@ -33,6 +43,19 @@ public class ParamConfigServiceTest extends BaseTest {
     @Test
     public void removeSpecifiedContent() throws Exception {
         paramConfigService.removeSpecifiedContent(ConfigConsts.IP_WHITE_LIST, "183.129.150.18");
+    }
+
+    @Test
+    public void testSelectAll() throws Exception {
+        PageHelper.startPage(3, 2, "id desc");
+        Page<ParamConfig> paramConfigList = paramConfigMapper.selectAll();
+        System.out.println(paramConfigList);
+    }
+
+    @Test
+    public void testSelectAll2() throws Exception {
+        Page<ParamConfig> paramConfigList = paramConfigMapper.selectAll(2, 2, "id desc");
+        System.out.println(paramConfigList);
     }
 
     @Test

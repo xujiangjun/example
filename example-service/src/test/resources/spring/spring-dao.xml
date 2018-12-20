@@ -35,6 +35,20 @@
         <property name="typeAliasesPackage" value="com.xujiangjun.example.dao.model" />
         <!-- 扫描sql配置文件：mapper需要的xml文件 -->
         <property name="mapperLocations" value="classpath:META-INF/mybatis/mapper/*.xml" />
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                            supportMethodsArguments=true
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!-- 3.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->

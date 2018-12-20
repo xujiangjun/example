@@ -179,4 +179,9 @@
     </set>
     where param_no = #{paramNo,jdbcType=VARCHAR} and is_deleted = '0'
   </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from c_param_config
+  </select>
 </mapper>
