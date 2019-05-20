@@ -11,12 +11,13 @@ public class LifeTest {
 
 
     public static void main(String[] args) {
+        System.out.println(Long.toBinaryString(System.currentTimeMillis() - new DateTime("1970-01-01").getMillis()));
         testHundredDay();
         testNextDay();
     }
 
     public static void testNextDay(){
-        DateTime startTime = DateUtils.fullFormatter.parseDateTime("2018-11-09 10:00:00");
+        DateTime startTime = DateUtils.fullFormatter.parseDateTime("2019-04-26 10:00:00");
         DateTime nextTime;
         for (int i = 0; i < 5; i++) {
             nextTime = startTime.plusDays(25);

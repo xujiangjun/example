@@ -52,8 +52,16 @@
             <artifactId>quartz</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
+            <artifactId>shiro-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.crazycake</groupId>
+            <artifactId>shiro-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>net.coobird</groupId>
