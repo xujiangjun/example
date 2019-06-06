@@ -15,7 +15,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/local"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/cdc"
                         userId="root" password="root">
         </jdbcConnection>
 
@@ -47,16 +47,22 @@
 			<!--<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>-->
 		<!--</table>        -->
 
-        <table tableName="tx_user" domainObjectName="TxUser" enableCountByExample="false"
+        <table tableName="sharding_tbl_0" domainObjectName="ShardingTbl" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">
-			<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>
+			<!--<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>-->
 		</table>
 
-        <table tableName="tx_login_log" domainObjectName="TxLoginLog" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">
-			<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>
-		</table>
+        <!--<table tableName="tx_user" domainObjectName="TxUser" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">-->
+			<!--<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>-->
+		<!--</table>-->
+
+        <!--<table tableName="tx_login_log" domainObjectName="TxLoginLog" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">-->
+			<!--<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>-->
+		<!--</table>-->
     </context>
 </generatorConfiguration>

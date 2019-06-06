@@ -359,6 +359,12 @@
                 <groupId>org.crazycake</groupId>
                 <artifactId>shiro-redis</artifactId>
                 <version>3.2.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.antlr</groupId>
+                        <artifactId>antlr4-runtime</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
@@ -371,9 +377,14 @@
                 <version>4.1.2</version>
             </dependency>
             <dependency>
-                <groupId>io.shardingsphere</groupId>
+                <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-core</artifactId>
-                <version>3.0.0</version>
+                <version>4.0.0-RC1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-namespace</artifactId>
+                <version>4.0.0-RC1</version>
             </dependency>
             <dependency>
                 <groupId>net.coobird</groupId>
