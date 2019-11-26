@@ -17,7 +17,7 @@ public class LifeTest {
     }
 
     public static void testNextDay(){
-        DateTime startTime = DateUtils.fullFormatter.parseDateTime("2019-04-26 10:00:00");
+        DateTime startTime = DateUtils.fullFormatter.parseDateTime("2019-08-20 10:00:00");
         DateTime nextTime;
         for (int i = 0; i < 5; i++) {
             nextTime = startTime.plusDays(25);

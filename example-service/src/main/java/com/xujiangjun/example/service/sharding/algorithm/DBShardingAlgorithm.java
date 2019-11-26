@@ -15,7 +15,7 @@ public class DBShardingAlgorithm implements PreciseShardingAlgorithm<Long> {
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Long> shardingValue) {
         for (String availableTargetName : availableTargetNames) {
-            if(availableTargetName.endsWith(shardingValue.getValue() % 2 + "")){
+            if(availableTargetName.endsWith(shardingValue.getValue() % availableTargetNames.size() + "")){
                 return availableTargetName;
             }
         }

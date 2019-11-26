@@ -81,8 +81,10 @@
         <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
     </bean>
 
-    <sharding:standard-strategy id="dbShardingStrategy" sharding-column="id" precise-algorithm-ref="dbShardingAlgorithm"/>
-    <sharding:standard-strategy id="tblShardingStrategy" sharding-column="id" precise-algorithm-ref="tblShardingAlgorithm"/>
+    <sharding:standard-strategy id="dbShardingStrategy" sharding-column="id"
+                                precise-algorithm-ref="dbShardingAlgorithm" range-algorithm-ref=""/>
+    <sharding:standard-strategy id="tblShardingStrategy" sharding-column="id"
+                                precise-algorithm-ref="tblShardingAlgorithm" range-algorithm-ref=""/>
     <!--<sharding:inline-strategy id="dbShardingStrategy" sharding-column="id" algorithm-expression="dataSource$->{id % 2}"/>-->
     <!--<sharding:inline-strategy id="tblShardingStrategy" sharding-column="id" algorithm-expression="sharding_tbl_$->{id % 2}"/>-->
     <!--<sharding:key-generator id="exampleKeyGenerator" column="id" type="SNOWFLAKE"/>-->
@@ -97,5 +99,8 @@
                 <!--<sharding:broadcast-table-rule table="c_param_config"/>-->
             <!--</sharding:broadcast-table-rules>-->
         </sharding:sharding-rule>
+        <!--<sharding:props>-->
+            <!--<prop key="sql.show">true</prop>-->
+        <!--</sharding:props>-->
     </sharding:data-source>
 </beans>
