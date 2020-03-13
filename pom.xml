@@ -42,7 +42,7 @@
         <commons-lang3.version>3.5</commons-lang3.version>
         <commons-codec.version>1.10</commons-codec.version>
         <aliyun-sdk-oss.version>2.5.0</aliyun-sdk-oss.version>
-        <commons-fileupload.version>1.3.2</commons-fileupload.version>
+        <commons-fileupload.version>1.3.3</commons-fileupload.version>
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
         <mysql-connector-java.version>5.1.35</mysql-connector-java.version>
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
