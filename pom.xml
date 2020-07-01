@@ -31,7 +31,7 @@
         <spring-data-commons.version>1.12.6.RELEASE</spring-data-commons.version>
         <spring-data-redis.version>1.7.2.RELEASE</spring-data-redis.version>
         <jedis.version>2.9.0</jedis.version>
-        <quartz.version>2.2.1</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
         <aspectj.version>1.8.9</aspectj.version>
         <guava.version>19.0</guava.version>
         <zxing.version>3.3.0</zxing.version>
